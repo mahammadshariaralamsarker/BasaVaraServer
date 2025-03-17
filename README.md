@@ -20,11 +20,11 @@ Key features include advanced search and filtering for efficient content discove
 *   **Express.js**
 *   **MongoDB with Mongoose**
 *   **Zod**
-*   **cros**
+*   **cors**
 *   **dotenv**
 *   **http-status-codes**
 *   **JWT**
-*   **bycrpt**j
+*   **bcrypt**
 *   **Stripe**
 
 
@@ -66,7 +66,7 @@ Key features include advanced search and filtering for efficient content discove
 - **Delete Blog**: `DELETE /api/blogs/:id` (Blog owner only)
 - **View Blogs**: `GET /api/blogs` (Public API with search, sort, filter)
 
-### Caregory Management
+### Category Management
 - **Create Blog**: `POST /api/categorys` 
 - **Update Blog**: `PATCH /api/categorys/:id` 
 - **Delete Blog**: `DELETE /api/categorys/:id` 
@@ -95,3 +95,4 @@ All errors are returned in a structured format with clear messages and status co
 
 Thank you for exploring this project! 🚀
 # assignment-4-server
+ 

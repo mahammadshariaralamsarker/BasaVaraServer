@@ -6,6 +6,12 @@ import { adminController } from "./admin.controller";
 const adminRouter = Router();
 
 adminRouter.get(
+  "/listings",
+  auth(USER_ROLE.admin),
+  adminController.getAllHousesByAdmin
+);
+
+adminRouter.get(
   "/users",
   auth(USER_ROLE.admin),
   adminController.getAllUsersByAdmin
@@ -30,8 +36,6 @@ adminRouter.delete(
 
 export default adminRouter;
  
-  
-//! GET** /admin/listings:` Retrieve all rental house listings.
 //* DELETE** /admin/user/:id:` Delete user.
 // PUT** /admin/listings/:id:` Update or moderate a rental listing.
 // DELETE** /admin/listings/:id:` Remove a rental listing if necessary.

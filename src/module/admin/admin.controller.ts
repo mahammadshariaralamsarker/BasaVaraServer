@@ -3,6 +3,22 @@ import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { adminService } from "./admin.service";
 
+const getAllHousesByAdmin = catchAsync(async (req, res) => {
+  const houses = await adminService.getAllHouses();
+
+  if (!houses || houses.length === 0) {
+    throw new Error("No houses found");
+  }
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: "Houses retrieved successfully",
+    data: houses,
+  });
+});
+
+
+//
 const userBlockByAdmin = catchAsync(async (req, res) => {
   if (!req.user || req.user.role !== "admin") {
     throw new Error("User is not authenticated or authorized");
@@ -77,6 +93,8 @@ const updateRoleByAdmin = catchAsync(async (req, res) => {
 });
 
 export const adminController = {
+  getAllHousesByAdmin,
+  //
   userBlockByAdmin,
   deleteBlogByAdmin,
   getAllUsersByAdmin,

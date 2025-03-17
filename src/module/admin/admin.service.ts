@@ -1,5 +1,14 @@
 import Blog from "../blog/blog.model";
+import { ProductModel } from "../product/product.model";
 import User from "../user/user.model";
+
+const getAllHouses = async () => {
+  const result = await ProductModel.find();
+  return result;
+};
+
+
+
 
 const blockUser = async (userId: string) => {
   const result = await User.findByIdAndUpdate(
@@ -9,7 +18,6 @@ const blockUser = async (userId: string) => {
   );
   return result;
 };
-
 const deleteBlog = async (blogId: string) => {
   const result = await Blog.findByIdAndDelete(blogId);
   return result;
@@ -29,6 +37,9 @@ const updateRoleByAdmin = async (userId: string, payload: { role: string }) => {
 };
 
 export const adminService = {
+  getAllHouses,
+  
+  //
   blockUser,
   deleteBlog,
   getAllUsers,
