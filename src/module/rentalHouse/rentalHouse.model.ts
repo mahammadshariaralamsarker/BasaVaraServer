@@ -1,5 +1,5 @@
 import { Schema, model, Types } from "mongoose";
-import { TProduct } from "./product.interface";
+import { TProduct } from "./rentalHouse.interface";
 
 const productSchema = new Schema<TProduct>(
   {
@@ -31,7 +31,7 @@ const productSchema = new Schema<TProduct>(
     },
   },
   {
-    timestamps: true,  
+    timestamps: true,
   }
 );
 

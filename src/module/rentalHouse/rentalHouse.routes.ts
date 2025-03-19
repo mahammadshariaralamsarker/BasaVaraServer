@@ -1,5 +1,5 @@
 import express from 'express';
-import { ProductControllers } from './product.controller';
+import { ProductControllers } from './rentalHouse.controller';
 import { multerUpload } from '../../config/multer.config';
 import { parseBody } from '../../middlewares/bodyParser';
 

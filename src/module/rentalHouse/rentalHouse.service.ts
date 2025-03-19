@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { TProduct } from "./product.interface";
-import { ProductModel } from "./product.model";
+import { TProduct } from "./rentalHouse.interface";
+import { ProductModel } from "./rentalHouse.model";
 import AppError from "../../helpers/error";
 import { StatusCodes } from "http-status-codes";
 import { IImageFiles } from "../../middlewares/interface/IImageFile";
@@ -28,7 +28,7 @@ const getAllProductsFromDB = async () => {
 };
 
 // Get single product following by id
-const getSingleProdutFromDB = async (id: string) => {
+const getSingleProductFromDB = async (id: string) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return null;
   }
@@ -40,12 +40,11 @@ const getSingleProdutFromDB = async (id: string) => {
 // Update a product by ID
 const updateProductInDB = async (id: string, data: TProduct) => {
   console.log("data.images", data.images);
-  if (data.images && data.images.length > 0) {
-    console.log("image");
+  if (data.images && data.images.length > 0) { 
     data.imageUrls = data.images.map((image: any) => image.path);
   }
   const result = await ProductModel.findByIdAndUpdate(id, data, { new: true });
-  console.log("result", result);
+   
   return result;
 };
 
@@ -62,7 +61,7 @@ const deleteProductFromDB = async (id: string): Promise<TProduct | null> => {
 export const ProductServices = {
   createProductIntoDB,
   getAllProductsFromDB,
-  getSingleProdutFromDB,
+  getSingleProductFromDB,
   updateProductInDB,
   deleteProductFromDB,
 };

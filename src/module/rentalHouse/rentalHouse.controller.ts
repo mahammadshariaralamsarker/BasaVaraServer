@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { Request, Response } from "express";
-import { ProductServices } from "./product.service";
+import { ProductServices } from "./rentalHouse.service";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { StatusCodes } from "http-status-codes";
@@ -27,11 +27,10 @@ const getAllProducts = async (req: Request, res: Response) => {
       message: "products retrieved successfully",
       data: result,
     });
-  } catch (err) {
-    console.error(err);
+  } catch (err) { 
     res.status(500).json({
       success: false,
-      message: "Failed to retrieve Books",
+      message: "Failed to retrieve products",
     });
   }
 };
@@ -39,7 +38,7 @@ const getAllProducts = async (req: Request, res: Response) => {
 const getSingleProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
-    const result = await ProductServices.getSingleProdutFromDB(productId);
+    const result = await ProductServices.getSingleProductFromDB(productId);
     res.status(200).json({
       success: true,
       message: "Book retrieved successfully",

@@ -1,19 +1,22 @@
 import mongoose from "mongoose";
 import { Order } from "./order.interface";
 import { OrderModel } from "./order.model";
-import { ProductModel } from "../product/product.model";
-const stripe = require('stripe')('sk_test_51L1wwjDAYSz72lr1qJ4h8sa7mvvNNFTPGjgMeqoQtnWKYXGT7zONgAmDJAIrYSUtaDu9xroi1FCToiW90FtP4gah00eYkVqyIB');
-
+import { ProductModel } from "../rentalHouse/rentalHouse.model";
+const stripe = require("stripe")(
+  "sk_test_51L1wwjDAYSz72lr1qJ4h8sa7mvvNNFTPGjgMeqoQtnWKYXGT7zONgAmDJAIrYSUtaDu9xroi1FCToiW90FtP4gah00eYkVqyIB"
+);
 
 export const createOrderIntoDB = async (payload: Order) => {
   const session = await mongoose.startSession(); // Start transaction
   session.startTransaction();
 
   try {
-    console.log(payload)
+    console.log(payload);
     // Check stock for each product
     for (const item of payload.products) {
-      const product = await ProductModel.findById(item.product).session(session);
+      const product = await ProductModel.findById(item.product).session(
+        session
+      );
 
       if (!product) {
         throw new Error(`Product with ID ${item.product} not found`);
@@ -42,36 +45,21 @@ export const createOrderIntoDB = async (payload: Order) => {
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// cehckout 
+// cehckout
 const CheckoutOrderIntoDB = async (payload: Order) => {
   const result = new OrderModel(payload);
   const stripeBuyPrices = Number(result?.totalPrice);
-  const amount = Number((stripeBuyPrices  * 100))
+  const amount = Number(stripeBuyPrices * 100);
   const paymentIntent = await stripe.paymentIntents.create({
     amount: amount,
     payment_method_types: ["card"],
     currency: "usd",
   });
 
-
-  return {paymentIntent,result};
+  return { paymentIntent, result };
 };
 
-// Get all Orders 
+// Get all Orders
 const getAlOrdersFromDB = async () => {
   const result = await OrderModel.find();
   return result;
@@ -83,10 +71,9 @@ const getSingleOrderFromDB = async (id: string) => {
   return result;
 };
 
-
 // Update a Order by ID
 const updateOrderFromDB = async (id: string, data: Order) => {
-  const result = await OrderModel.findByIdAndUpdate(id, data, { new: true })
+  const result = await OrderModel.findByIdAndUpdate(id, data, { new: true });
   return result;
 };
 
@@ -95,7 +82,6 @@ const deleteOrderFromDB = async (id: string): Promise<Order | null> => {
   const result = await OrderModel.findOneAndDelete({ _id: id });
   return result;
 };
-
 
 const getTotalPriceFromDB = async () => {
   const result = await OrderModel.aggregate([
@@ -116,7 +102,6 @@ const getTotalPriceFromDB = async () => {
   return result.length > 0 ? result[0].totalRevenue : 0;
 };
 
-
 //all service is exported from this function
 export const OrderServices = {
   createOrderIntoDB,
@@ -125,5 +110,5 @@ export const OrderServices = {
   updateOrderFromDB,
   deleteOrderFromDB,
   getTotalPriceFromDB,
-  CheckoutOrderIntoDB
+  CheckoutOrderIntoDB,
 };

@@ -16,51 +16,6 @@ const getAllHousesByAdmin = catchAsync(async (req, res) => {
     data: houses,
   });
 });
-
-
-//
-const userBlockByAdmin = catchAsync(async (req, res) => {
-  if (!req.user || req.user.role !== "admin") {
-    throw new Error("User is not authenticated or authorized");
-  }
-
-  const { userId } = req.params;
-
-  const result = await adminService.blockUser(userId);
-
-  if (!result) {
-    throw new Error("User not found");
-  }
-
-  sendResponse(res, {
-    success: true,
-    statusCode: StatusCodes.OK,
-    message: "User blocked successfully",
-    data: result,
-  });
-});
-
-const deleteBlogByAdmin = catchAsync(async (req, res) => {
-  if (!req.user || req.user.role !== "admin") {
-    throw new Error("User is not authenticated or authorized");
-  }
-
-  const { id: blogId } = req.params;
-
-  const result = await adminService.deleteBlog(blogId);
-
-  if (!result) {
-    throw new Error("Blog not found");
-  }
-
-  sendResponse(res, {
-    success: true,
-    statusCode: StatusCodes.OK,
-    message: "Blog deleted successfully",
-    data: result,
-  });
-});
-
 const getAllUsersByAdmin = catchAsync(async (req, res) => {
   const users = await adminService.getAllUsers();
 
@@ -74,11 +29,10 @@ const getAllUsersByAdmin = catchAsync(async (req, res) => {
     data: users,
   });
 });
-
-const updateRoleByAdmin = catchAsync(async (req, res) => {
+const userDeleteByAdmin = catchAsync(async (req, res) => {
   const { userId } = req.params;
-  const payload = req.body; 
-  const result = await adminService.updateRoleByAdmin(userId, payload);
+
+  const result = await adminService.deleteUserByAdmin(userId);
 
   if (!result) {
     throw new Error("User not found");
@@ -87,16 +41,14 @@ const updateRoleByAdmin = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: StatusCodes.OK,
-    message: "User role Changed successfully",
+    message: "User delete successfully",
     data: result,
   });
 });
+ 
 
 export const adminController = {
   getAllHousesByAdmin,
-  //
-  userBlockByAdmin,
-  deleteBlogByAdmin,
   getAllUsersByAdmin,
-  updateRoleByAdmin,
+  userDeleteByAdmin, 
 };

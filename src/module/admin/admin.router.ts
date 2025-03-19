@@ -18,24 +18,13 @@ adminRouter.get(
 );
 
 adminRouter.patch(
-  "/users/:userId/block",
+  "/user/:id",
   auth(USER_ROLE.admin),
-  adminController.userBlockByAdmin
-);
-adminRouter.patch(
-  "/users/:userId",
-  auth(USER_ROLE.admin),
-  adminController.updateRoleByAdmin
+  adminController.userDeleteByAdmin
 );
 
-adminRouter.delete(
-  "/blogs/:id",
-  auth(USER_ROLE.admin),
-  adminController.deleteBlogByAdmin
-);
-
-export default adminRouter;
  
-//* DELETE** /admin/user/:id:` Delete user.
+export default adminRouter;
+  
 // PUT** /admin/listings/:id:` Update or moderate a rental listing.
 // DELETE** /admin/listings/:id:` Remove a rental listing if necessary.
