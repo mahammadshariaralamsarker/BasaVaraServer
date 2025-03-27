@@ -22,7 +22,6 @@ const getSingleBlog = async (id: string) => {
 }
 
 const updateBlog = async (id: string, data: IBlog) => {
-
   const result = await Blog.findOneAndUpdate({_id: id}, data, {
     new: true,
   })
