@@ -26,7 +26,6 @@ const updateBlog = async (id: string, data: IBlog) => {
     new: true,
   })
   return result
-
 }
 
 const deleteBlog = async (blogId: string, userId: string) => {
