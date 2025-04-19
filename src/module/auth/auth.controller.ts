@@ -10,6 +10,7 @@ const register = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.CREATED,
     status: true,
+    success: true,
     message: "User registered successfully",
     data: result,
   });
@@ -21,6 +22,7 @@ const login = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.ACCEPTED,
     status: true,
+    success: true,
     message: "Login successful",
     data: {
       token: result?.token || "",
@@ -33,4 +35,4 @@ export const AuthControllers = {
   login,
 };
 
-//Test purpose 
+//Test purpose
