@@ -12,11 +12,23 @@ const submitRequest = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: StatusCodes.CREATED,
     success: true,
-    message: "Request sent successfully to landlord",
+    message: "Rental Request submitted successfully",
+    data: result,
+  });
+});
+const getMyRequests = catchAsync(async (req, res) => {
+  const tenantId = req.user?._id; // from auth middleware
+  const result = await TenantService.getTenantRequestsFromDB(tenantId);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.CREATED,
+    success: true,
+    message: "Retrieved your rental requests",
     data: result,
   });
 });
 
 export const TenantController = {
   submitRequest,
+  getMyRequests,
 };

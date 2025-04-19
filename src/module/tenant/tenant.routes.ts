@@ -12,6 +12,6 @@ router.post(
   validateRequest(TenantValidationSchema.createTenantValidationSchema),
   TenantController.submitRequest
 );
-// router.get("/my-requests", auth("tenant"), TenantController.getMyRequests);
+router.get("/my-requests", auth("tenant"), TenantController.getMyRequests);
 
 export const TenantRouter = router;
