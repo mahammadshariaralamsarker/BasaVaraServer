@@ -3,6 +3,7 @@ import catchAsync from "../../utils/catchAsync";
 import { AuthService } from "./auth.service";
 import sendResponse from "../../utils/sendResponse";
 import { StatusCodes } from "http-status-codes";
+import AppError from "../../helpers/error";
 
 const register = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthService.register(req.body);
@@ -18,6 +19,15 @@ const register = catchAsync(async (req: Request, res: Response) => {
 
 const login = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthService.login(req.body);
+  const { refreshToken } = result;
+  console.log("refresh", refreshToken);
+
+  res.cookie("refreshToken", refreshToken, {
+    secure: process.env.NODE_ENV === "production",
+    httpOnly: true,
+    sameSite: "none",
+    maxAge: 1000 * 60 * 60 * 24 * 365,
+  });
 
   sendResponse(res, {
     statusCode: StatusCodes.ACCEPTED,
@@ -25,14 +35,43 @@ const login = catchAsync(async (req: Request, res: Response) => {
     success: true,
     message: "Login successful",
     data: {
-      token: result?.token || "",
+      token: result?.accessToken || "",
     },
+  });
+});
+
+const changePassword = catchAsync(async (req, res) => {
+  if (!req.user) {
+    throw new AppError(401, "Unauthorized. User not found in request.");
+  }
+  const { ...passwordData } = req.body;
+  const result = await AuthService.changePassword(req.user, passwordData);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Password Changed Successfully",
+    data: result,
+  });
+});
+
+const refreshToken = catchAsync(async (req, res) => {
+  const { refreshToken } = req.cookies;
+  console.log("Cookies", refreshToken);
+  const result = await AuthService.regenerateAcessToken(refreshToken);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "New Access token is retrieved successfully!",
+    data: result,
   });
 });
 
 export const AuthControllers = {
   register,
   login,
+  changePassword,
+  refreshToken,
 };
 
-//Test purpose
