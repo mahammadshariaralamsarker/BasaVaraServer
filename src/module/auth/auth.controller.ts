@@ -32,3 +32,5 @@ export const AuthControllers = {
   register,
   login,
 };
+
+//Test purpose 
