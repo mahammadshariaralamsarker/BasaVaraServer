@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
-import { TTenant } from "./tenant.interface";
+import { ITenant } from "./tenant.interface";
 
-const tenantSchema = new Schema<TTenant>(
+const tenantSchema = new Schema<ITenant>(
   {
     products: { type: Schema.Types.ObjectId, ref: "Product", required: true },
     tenant: { type: Schema.Types.ObjectId, ref: "User" },
@@ -11,7 +11,7 @@ const tenantSchema = new Schema<TTenant>(
       default: "pending",
     },
     message: { type: String, required: true },
-    phoneNumber: { type: String }, // filled by landlord if approved
+    phone: { type: String, required: true },
     paymentStatus: {
       type: String,
       enum: ["pending", "paid"],
@@ -21,4 +21,4 @@ const tenantSchema = new Schema<TTenant>(
   { timestamps: true }
 );
 
-export const Tenant = model<TTenant>("Tenant", tenantSchema);
+export const Tenant = model<ITenant>("Tenant", tenantSchema);

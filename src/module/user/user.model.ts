@@ -36,7 +36,7 @@ const userSchema = new Schema<IUser>(
       default: "tenant",
     },
     phone: {
-      type: Number,
+      type: String,
     },
   },
   {

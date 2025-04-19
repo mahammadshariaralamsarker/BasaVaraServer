@@ -28,7 +28,7 @@ const userValidationSchema = z.object({
           "Role must be provided and must be 'landlord' or 'tenant'",
       })
       .default("tenant"),
-    phone: z.number(),
+    phone: z.string(),
 
     createdAt: z.date().default(() => new Date()),
 

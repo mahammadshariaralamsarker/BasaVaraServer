@@ -1,10 +1,10 @@
 import { Types } from "mongoose";
 
-export type TTenant = {
+export interface ITenant {
   products: Types.ObjectId;
   tenant: Types.ObjectId;
   status?: "pending" | "approved" | "rejected";
   message: string;
-  phoneNumber?: string;
+  phone?: string;
   paymentStatus?: "pending" | "paid";
-};
+}
