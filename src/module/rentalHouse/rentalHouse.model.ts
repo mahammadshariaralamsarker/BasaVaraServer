@@ -3,6 +3,10 @@ import { TProduct } from "./rentalHouse.interface";
 
 const productSchema = new Schema<TProduct>(
   {
+    title: {
+      type: String,
+      required: [true, "Title is required"],
+    },
     location: {
       type: String,
       required: [true, "Location is required"],
@@ -20,6 +24,10 @@ const productSchema = new Schema<TProduct>(
       type: String,
       required: [true, "Number of bedrooms is required"],
     },
+    bathrooms: {
+      type: String,
+      required: [true, "Number of bathrooms is required"],
+    },
     imageUrls: {
       type: [String],
       required: [true, "Product images are required"],
@@ -28,6 +36,15 @@ const productSchema = new Schema<TProduct>(
       type: Schema.Types.ObjectId,
       ref: "User",
       required: [true, "LandlordID is required"],
+    },
+    area: {
+      type: String,
+      required: [true, "Area is required"],
+    },
+    houseStatus: {
+      type: String,
+      enum: ["available", "rented"],
+      default: "available",
     },
   },
   {
