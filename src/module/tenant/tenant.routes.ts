@@ -15,10 +15,10 @@ router.post(
 router.get("/my-requests", auth("tenant"), TenantController.getMyRequests);
 router.put("/profile", auth("tenant"), TenantController.updateTenantProfile);
 
-router.put(
-  "/requests/:requestId",
-  auth("landlord"),
-  TenantController.respondToRentalRequest
-);
+// router.put(
+//   "/requests/:requestId",
+//   auth("landlord"),
+//   TenantController.respondToRentalRequest
+// );
 
 export const TenantRouter = router;

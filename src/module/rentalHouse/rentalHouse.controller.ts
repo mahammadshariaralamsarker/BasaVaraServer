@@ -96,6 +96,24 @@ const deleteProduct = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+const respondToRentalRequest = catchAsync(async (req, res) => {
+  const { requestId } = req.params;
+  console.log(requestId);
+  const { status, phoneNumber } = req.body;
+
+  const result = await ProductServices.respondToRentalRequestDB(
+    requestId,
+    status,
+    phoneNumber
+  );
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Rental Request responded successfully",
+    data: result,
+  });
+});
+
 const getLandlordPostings = catchAsync(async (req, res) => {
   const landlordId = req.user?.id; // from auth middleware
 
@@ -117,4 +135,5 @@ export const ProductControllers = {
   updateProduct,
   deleteProduct,
   getLandlordPostings,
+  respondToRentalRequest,
 };

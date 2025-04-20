@@ -38,6 +38,13 @@ router.get(
   ProductControllers.getLandlordPostings
 );
 
+//Respond to tenants
+router.put(
+  "/landlords/requests/:requestId",
+  auth("landlord"),
+  ProductControllers.respondToRentalRequest
+);
+
 // Delete a product by ID ---------- done
 router.delete("/:productId", ProductControllers.deleteProduct);
 
