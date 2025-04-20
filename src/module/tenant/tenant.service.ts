@@ -25,7 +25,6 @@ const updateTenantProfileDB = async (id: string, payload: Partial<IUser>) => {
   return result;
 };
 
-// const respondToRentalRequestDB = async (
 //   requestId: string,
 //   status: "approved" | "rejected",
 //   phoneNumber?: string
@@ -74,5 +73,4 @@ export const TenantService = {
   createTenantRequestIntoDB,
   getTenantRequestsFromDB,
   updateTenantProfileDB,
-  // respondToRentalRequestDB,
 };
