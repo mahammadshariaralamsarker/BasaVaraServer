@@ -2,6 +2,7 @@ import express from "express";
 import { ProductControllers } from "./rentalHouse.controller";
 import { multerUpload } from "../../config/multer.config";
 import { parseBody } from "../../middlewares/bodyParser";
+import auth from "../../middlewares/auth";
 
 const router = express.Router();
 
@@ -28,6 +29,13 @@ router.put(
   multerUpload.fields([{ name: "images" }]),
   parseBody,
   ProductControllers.updateProduct
+);
+
+//Landlord postings
+router.get(
+  "/landlords/my-postings",
+  auth("landlord"),
+  ProductControllers.getLandlordPostings
 );
 
 // Delete a product by ID ---------- done

@@ -40,11 +40,18 @@ const getSingleProductFromDB = async (id: string) => {
 // Update a product by ID
 const updateProductInDB = async (id: string, data: TProduct) => {
   console.log("data.images", data.images);
-  if (data.images && data.images.length > 0) { 
+  if (data.images && data.images.length > 0) {
     data.imageUrls = data.images.map((image: any) => image.path);
   }
   const result = await ProductModel.findByIdAndUpdate(id, data, { new: true });
-   
+
+  return result;
+};
+
+//landlord can retrieve its own listings
+
+const getLandlordListings = async (landlordId: string) => {
+  const result = await ProductModel.find({ LandlordID: landlordId });
   return result;
 };
 
@@ -63,5 +70,6 @@ export const ProductServices = {
   getAllProductsFromDB,
   getSingleProductFromDB,
   updateProductInDB,
+  getLandlordListings,
   deleteProductFromDB,
 };

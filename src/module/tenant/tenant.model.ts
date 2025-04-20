@@ -11,7 +11,7 @@ const tenantSchema = new Schema<ITenant>(
       default: "pending",
     },
     message: { type: String, required: true },
-    phone: { type: String, required: true },
+    phone: { type: String },
     paymentStatus: {
       type: String,
       enum: ["pending", "paid"],

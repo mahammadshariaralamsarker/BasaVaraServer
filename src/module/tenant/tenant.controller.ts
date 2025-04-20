@@ -35,7 +35,7 @@ const updateTenantProfile = catchAsync(async (req, res) => {
   const { role, ...rest } = req.body; // Prevent role from being updated
   console.log(tenantId, rest);
 
-  const result = await TenantService.updateTenantProfileDB(tenantId, rest); // pass `rest`
+  const result = await TenantService.updateTenantProfileDB(tenantId, rest);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -45,8 +45,27 @@ const updateTenantProfile = catchAsync(async (req, res) => {
   });
 });
 
+const respondToRentalRequest = catchAsync(async (req, res) => {
+  const { requestId } = req.params;
+  console.log(requestId)
+  const { status, phoneNumber } = req.body;
+
+  const result = await TenantService.respondToRentalRequestDB(
+    requestId,
+    status,
+    phoneNumber
+  );
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Rental Request responded successfully",
+    data: result,
+  });
+});
+
 export const TenantController = {
   submitRequest,
   getMyRequests,
   updateTenantProfile,
+  respondToRentalRequest
 };

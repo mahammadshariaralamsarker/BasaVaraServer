@@ -1,14 +1,15 @@
-import { Types } from 'mongoose';
+import { Types } from "mongoose";
 
-export type Order = {
-    email: string; 
-    products: {
-      product: Types.ObjectId;
-      quantity: number;
-      price: number;
-    }[];
-    totalItems: number; 
-    totalPrice: number; 
-    trxID: string; 
+export type TOrder = {
+  request: Types.ObjectId; // link to the approved rental request
+  tenant: Types.ObjectId;
+  amount: number;
+  status: "Pending" | "Paid";
+  transaction: {
+    id: string;
+    method: string;
+    sp_code: string;
+    sp_message: string;
+    date_time: string;
   };
-  
+};
