@@ -4,6 +4,8 @@ import { ProductModel } from "./rentalHouse.model";
 import AppError from "../../helpers/error";
 import { StatusCodes } from "http-status-codes";
 import { IImageFiles } from "../../middlewares/interface/IImageFile";
+import { Tenant } from "../tenant/tenant.model";
+import User from "../user/user.model";
 
 // Create a new product
 const createProductIntoDB = async (
@@ -40,11 +42,66 @@ const getSingleProductFromDB = async (id: string) => {
 // Update a product by ID
 const updateProductInDB = async (id: string, data: TProduct) => {
   console.log("data.images", data.images);
-  if (data.images && data.images.length > 0) { 
+  if (data.images && data.images.length > 0) {
     data.imageUrls = data.images.map((image: any) => image.path);
   }
   const result = await ProductModel.findByIdAndUpdate(id, data, { new: true });
-   
+
+  return result;
+};
+
+//respond to requests
+const respondToRentalRequestDB = async (
+  requestId: string,
+  status: "approved" | "rejected",
+  phoneNumber?: string
+) => {
+  const request = await Tenant.findById(requestId);
+
+  if (!request) {
+    throw new AppError(400, "Tenant Request Not found");
+  }
+
+  const product = await ProductModel.findById(request.products);
+  if (!product) {
+    throw new AppError(400, "Product Not found");
+  }
+
+  // console.log(request);
+  // console.log("This is product", product);
+
+  const landlord = await User.findById(product.LandlordID);
+  if (!landlord) {
+    throw new AppError(400, "User Not found");
+  }
+
+  console.log(landlord);
+
+  // If status is "Approved", check if the landlord's phone number is provided
+  const landlordPhone = landlord.phone || phoneNumber;
+  if (status === "approved") {
+    if (!landlord?.phone) {
+      if (!landlordPhone) {
+        throw new AppError(404, "Phone number is required");
+      }
+      request.phone = landlordPhone;
+    } else {
+      request.phone = landlordPhone;
+    }
+  } else if (status === "rejected") {
+    request.phone = landlordPhone;
+  }
+
+  request.status = status; // Update the status to Approved/Rejected
+  await request.save(); // Save the changes
+
+  return request;
+};
+
+//landlord can retrieve its own listings
+
+const getLandlordListings = async (landlordId: string) => {
+  const result = await ProductModel.find({ LandlordID: landlordId });
   return result;
 };
 
@@ -63,5 +120,7 @@ export const ProductServices = {
   getAllProductsFromDB,
   getSingleProductFromDB,
   updateProductInDB,
+  getLandlordListings,
+  respondToRentalRequestDB,
   deleteProductFromDB,
 };
