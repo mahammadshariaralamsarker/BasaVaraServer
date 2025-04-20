@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
-import { TProduct } from "./rentalHouse.interface";
-import { ProductModel } from "./rentalHouse.model";
-import AppError from "../../helpers/error";
-import { StatusCodes } from "http-status-codes";
-import { IImageFiles } from "../../middlewares/interface/IImageFile";
+import mongoose from 'mongoose';
+import { TProduct } from './rentalHouse.interface';
+import { ProductModel } from './rentalHouse.model';
+import AppError from '../../helpers/error';
+import { StatusCodes } from 'http-status-codes';
+import { IImageFiles } from '../../middlewares/interface/IImageFile';
 
 // Create a new product
 const createProductIntoDB = async (
@@ -12,7 +12,7 @@ const createProductIntoDB = async (
 ) => {
   const { images } = productImages;
   if (!images || images.length === 0) {
-    throw new AppError(StatusCodes.BAD_REQUEST, "Product images are required.");
+    throw new AppError(StatusCodes.BAD_REQUEST, 'Product images are required.');
   }
 
   productData.imageUrls = images.map((image) => image.path);
@@ -39,12 +39,12 @@ const getSingleProductFromDB = async (id: string) => {
 
 // Update a product by ID
 const updateProductInDB = async (id: string, data: TProduct) => {
-  console.log("data.images", data.images);
-  if (data.images && data.images.length > 0) { 
+  console.log('data.images', data.images);
+  if (data.images && data.images.length > 0) {
     data.imageUrls = data.images.map((image: any) => image.path);
   }
   const result = await ProductModel.findByIdAndUpdate(id, data, { new: true });
-   
+
   return result;
 };
 
@@ -65,3 +65,5 @@ export const ProductServices = {
   updateProductInDB,
   deleteProductFromDB,
 };
+
+// all services
