@@ -1,34 +1,45 @@
 import express, { Request, Response } from "express";
-import userRouter from "./module/user/user.router";
-import authRouter from "./module/auth/auth.router";
-import blogRouter from "./module/blog/blog.router";
-import { globalErrorHandler } from "./middlewares/globalErrorHandler";
-import adminRouter from "./module/admin/admin.router";
-import notFound from "./middlewares/notFound";
-import { ProductRoutes } from "./module/rentalHouse/rentalHouse.routes";
-import { OrderRoutes } from "./module/order/order.routes";
+import userRouter from "./app/module/user/user.router";
+import authRouter from "./app/module/auth/auth.router";
+
+import { OrderRoutes } from "./app/module/order/order.routes";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import { CategoryRoutes } from "./module/category/category.routes";
+
+import { ProductRoutes } from "./app/module/rentalHouse/rentalHouse.routes";
+import { TenantRouter } from "./app/module/tenant/tenant.routes";
+import { globalErrorHandler } from "./app/middlewares/globalErrorHandler";
+import notFound from "./app/middlewares/notFound";
+import adminRouter from "./app/module/admin/admin.router";
 
 const app = express();
 //parsers
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: ["http://localhost:5173", "http://localhost:3000","http://localhost:3001"] }));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "http://localhost:3000",
+    ],
+  })
+);
 
 // middleware
 app.use(express.json());
 
 app.use("/auth", authRouter);
-app.use("/", ProductRoutes);
 
+app.use("/", ProductRoutes);
 app.use("/admin", adminRouter);
 
 app.use("/user", userRouter);
-app.use("/blogs", blogRouter);
+
+//For tenant
+app.use("/tenants", TenantRouter);
+
 app.use("/order", OrderRoutes);
-app.use("/categorys", CategoryRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send({
@@ -41,3 +52,6 @@ app.use(globalErrorHandler);
 app.use(notFound);
 
 export default app;
+
+
+//push
