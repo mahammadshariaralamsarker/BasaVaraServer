@@ -1,11 +1,11 @@
-import mongoose from "mongoose";
-import app from "./app";
+import mongoose from 'mongoose';
+import app from './app';
 
 async function server() {
   //changed over here the uri to test the project
   try {
     await mongoose.connect(
-      "mongodb+srv://admin:admin@project-1.gtysu.mongodb.net/assingment-6?retryWrites=true&w=majority&appName=Project-1"
+      'mongodb+srv://basaAdmin:3AkUrObBF1jSRBUw@cluster0.mrd4l.mongodb.net/basaVara?retryWrites=true&w=majority&appName=Cluster0'
     );
 
     app.listen(5000, () => {
