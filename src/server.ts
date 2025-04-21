@@ -5,7 +5,7 @@ async function server() {
   //changed over here the uri to test the project
   try {
     await mongoose.connect(
-      "mongodb+srv://admin:admin@project-1.gtysu.mongodb.net/assingment-6?retryWrites=true&w=majority&appName=Project-1"
+      "mongodb+srv://basaVara:ek89W9mm2ix9rQhb@cluster0.mh62rbj.mongodb.net/BasaVara?retryWrites=true&w=majority&appName=Cluster0"
     );
 
     app.listen(5000, () => {
