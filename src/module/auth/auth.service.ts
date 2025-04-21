@@ -20,7 +20,7 @@ const login = async (payload: { email: string; password: string }) => {
   if (!user) {
     throw new CustomError("This user is not found!", 404, { field: "email" });
   }
-
+console.log(user, "user founds");
   const isPasswordMatched = await bcrypt.compare(
     payload?.password,
     user?.password

@@ -11,6 +11,7 @@ const getAllUsers = async () => {
   return result;
 };
 const deleteUserByAdmin = async (userId: string) => {
+  // console.log("userId", userId);
   const result = await User.findByIdAndDelete(userId);
   return result;
 };

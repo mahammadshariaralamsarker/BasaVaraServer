@@ -8,8 +8,6 @@ import { globalErrorHandler } from "../../middlewares/globalErrorHandler";
 const authRouter = Router();
 
 authRouter.post('/register', validateRequest(UserValidation.userValidationSchema), AuthControllers.register);
-
-
 authRouter.post('/login', validateRequest(AuthValidation.loginValidationSchema), AuthControllers.login);
 
 authRouter.use(globalErrorHandler);

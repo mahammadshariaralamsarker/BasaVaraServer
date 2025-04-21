@@ -7,19 +7,19 @@ const adminRouter = Router();
 
 adminRouter.get(
   "/listings",
-  auth(USER_ROLE.admin),
+  // auth(USER_ROLE.admin),
   adminController.getAllHousesByAdmin
 );
 
 adminRouter.get(
   "/users",
-  auth(USER_ROLE.admin),
+  // auth(USER_ROLE.admin),
   adminController.getAllUsersByAdmin
 );
 
 adminRouter.patch(
   "/user/:id",
-  auth(USER_ROLE.admin),
+  // auth(USER_ROLE.admin),
   adminController.userDeleteByAdmin
 );
 

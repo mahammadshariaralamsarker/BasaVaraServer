@@ -10,6 +10,7 @@ const register = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.CREATED,
     status: true,
+    success: true,
     message: "User registered successfully",
     data: result,
   });
@@ -17,10 +18,12 @@ const register = catchAsync(async (req: Request, res: Response) => {
 
 const login = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthService.login(req.body);
-
+  console.log(result, "login result");
+  
   sendResponse(res, {
     statusCode: StatusCodes.ACCEPTED,
     status: true,
+    success: true,
     message: "Login successful",
     data: {
       token: result?.token || "",
