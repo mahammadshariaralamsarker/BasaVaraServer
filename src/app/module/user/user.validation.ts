@@ -29,6 +29,12 @@ const userValidationSchema = z.object({
       })
       .default("tenant"),
     phone: z.string(),
+    address: z.string({
+      required_error: "Address must be provided",
+    }),
+    city: z.string({
+      required_error: "City must be provided",
+    }),
 
     createdAt: z.date().default(() => new Date()),
 

@@ -54,6 +54,7 @@ const updateProductInDB = async (id: string, data: TProduct) => {
 const respondToRentalRequestDB = async (
   requestId: string,
   status: "Approved" | "Rejected",
+  userId: string,
   phoneNumber?: string
 ) => {
   const request = await Tenant.findById(requestId);
@@ -67,15 +68,20 @@ const respondToRentalRequestDB = async (
     throw new AppError(400, "Product Not found");
   }
 
-  // console.log(request);
-  // console.log("This is product", product);
-
   const landlord = await User.findById(product.LandlordID);
   if (!landlord) {
     throw new AppError(400, "User Not found");
   }
 
-  console.log(landlord);
+  console.log(product.LandlordID.toString(), userId);
+
+  if (product.LandlordID.toString() !== userId) {
+    console.log("Inside here");
+    throw new AppError(
+      400,
+      "You are not authorized to respond to this request"
+    );
+  }
 
   // If status is "Approved", check if the landlord's phone number is provided
   const landlordPhone = landlord.phone || phoneNumber;

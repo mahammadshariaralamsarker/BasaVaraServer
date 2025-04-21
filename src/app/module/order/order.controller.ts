@@ -26,9 +26,9 @@ const makeRentalPayment = catchAsync(async (req, res) => {
   if (!req.user) {
     throw new AppError(401, "Unauthorized: User not found in request");
   }
-  const { tenantId } = req.body;
+  const { tenantRequest } = req.body;
   const result = await RentalServices.createRentalTransactionIntoDB(
-    tenantId,
+    tenantRequest,
     req.user,
     req.ip as string
   );

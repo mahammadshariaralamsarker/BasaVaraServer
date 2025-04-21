@@ -100,10 +100,12 @@ const respondToRentalRequest = catchAsync(async (req, res) => {
   const { requestId } = req.params;
   console.log(requestId);
   const { status, phoneNumber } = req.body;
+  const userId = req?.user?.id;
 
   const result = await ProductServices.respondToRentalRequestDB(
     requestId,
     status,
+    userId,
     phoneNumber
   );
   sendResponse(res, {

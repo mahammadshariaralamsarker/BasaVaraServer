@@ -26,17 +26,33 @@ const createRentalTransactionIntoDB = async (
 
   // console.log(tenantRequest);
 
+  const tenant = await User.findOne(tenantRequest?.tenant);
+
+  if (!tenant) {
+    throw new AppError(400, "No tenant found");
+  }
   const product = await ProductModel.findById(tenantRequest.products);
+
+  const existingTransaction = await RentalTransaction.findOne({
+    tenantRequest: tenantRequest._id,
+    tenant: tenant._id,
+    product: product?._id,
+  });
+
+  if (existingTransaction) {
+    if (existingTransaction.status === "Paid") {
+      throw new AppError(400, "This rental has already been paid for");
+    } else {
+      throw new AppError(
+        400,
+        "You already have a pending transaction for this request"
+      );
+    }
+  }
 
   if (product?.houseStatus === "rented") {
     throw new AppError(400, "The listing is already rented");
   }
-
-  const tenant = await User.findOne(tenantRequest?.tenant);
-  if (!tenant) {
-    throw new AppError(400, "No tenant found");
-  }
-  console.log(tenant);
 
   const user = await User.findOne({ email: userInfo.email });
   // console.log("user", userName?.name);
@@ -119,6 +135,9 @@ const verifyPayment = async (orderId: string) => {
     if (updatedTransaction?.status === "Paid") {
       await ProductModel.findByIdAndUpdate(updatedTransaction.product, {
         houseStatus: "rented",
+      });
+      await Tenant.findByIdAndUpdate(updatedTransaction.tenantRequest, {
+        paymentStatus: "Paid",
       });
     }
   }
