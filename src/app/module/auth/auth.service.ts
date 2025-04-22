@@ -21,10 +21,10 @@ const register = async (payload: IUser) => {
 };
 
 const login = async (payload: { email: string; password: string }) => {
+ 
   const user = await User.findOne({ email: payload?.email }).select(
     "+password"
-  );
-
+  ); 
   if (!user) {
     throw new CustomError("This user is not found!", 404, { field: "email" });
   }
@@ -48,8 +48,7 @@ const login = async (payload: { email: string; password: string }) => {
     jwtPayload,
     process.env.JWT_ACCESS_SECRET as string,
     process.env.JWT_EXPIRES_IN as string
-  );
-
+  ); 
   const refreshToken = createToken(
     jwtPayload,
     process.env.jwt_refresh_secret as string,

@@ -34,8 +34,7 @@ export const globalErrorHandler = (
     message: "An unexpected error occurred",
     statusCode: 500,
     error: null,
-  };
-
+  }; 
   if (err instanceof CustomError) {
     response = {
       success: false,

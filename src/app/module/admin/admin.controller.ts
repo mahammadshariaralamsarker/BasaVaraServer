@@ -30,8 +30,8 @@ const getAllUsersByAdmin = catchAsync(async (req, res) => {
   });
 });
 const userDeleteByAdmin = catchAsync(async (req, res) => {
-  const  userId  = req.params.id; 
-    console.log("userId", userId);
+  const userId = req.params.id;
+  console.log("userId", userId);
   const result = await adminService.deleteUserByAdmin(userId);
 
   if (!result) {
@@ -45,8 +45,8 @@ const userDeleteByAdmin = catchAsync(async (req, res) => {
     data: result,
   });
 });
- 
 
+ 
 export const adminController = {
   getAllHousesByAdmin,
   getAllUsersByAdmin,

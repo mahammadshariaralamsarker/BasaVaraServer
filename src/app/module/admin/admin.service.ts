@@ -9,14 +9,16 @@ const getAllUsers = async () => {
   const result = await User.find();
   return result;
 };
-const deleteUserByAdmin = async (userId: string) => {
-  // console.log("userId", userId);
+const deleteUserByAdmin = async (userId: string) => { 
   const result = await User.findByIdAndDelete(userId);
   return result;
 };
+ 
+
 
 export const adminService = {
   getAllHouses,
   getAllUsers,
   deleteUserByAdmin,
+  updateLandlordByAdmin
 };

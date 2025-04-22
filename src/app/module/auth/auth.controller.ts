@@ -16,10 +16,9 @@ const register = catchAsync(async (req, res) => {
   });
 });
 
-const login = catchAsync(async (req, res) => {
+const login = catchAsync(async (req, res) => { 
   const result = await AuthService.login(req.body);
-  const { refreshToken } = result;
-  console.log("refresh", refreshToken);
+  const { refreshToken } = result;  
 
   res.cookie("refreshToken", refreshToken, {
     secure: process.env.NODE_ENV === "production",
