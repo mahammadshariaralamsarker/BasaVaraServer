@@ -19,6 +19,5 @@ const deleteUserByAdmin = async (userId: string) => {
 export const adminService = {
   getAllHouses,
   getAllUsers,
-  deleteUserByAdmin,
-  updateLandlordByAdmin
+  deleteUserByAdmin, 
 };

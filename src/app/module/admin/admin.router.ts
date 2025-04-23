@@ -34,8 +34,8 @@ multerUpload.fields([{ name: "images" }]),
   parseBody,
   ProductControllers.updateProduct
 );
-adminRouter.delete("/listings/:productId", ProductControllers.deleteProduct);
+adminRouter.delete("/listings/:productId",  
+  // auth(USER_ROLE.admin), 
+  ProductControllers.deleteProduct);
 export default adminRouter;
-  
-// PUT** /admin/listings/:id:` Update or moderate a rental listing.
-// DELETE** /admin/listings/:id:` Remove a rental listing if necessary.
+ 
