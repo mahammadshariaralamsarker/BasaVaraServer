@@ -16,9 +16,7 @@ const createProductIntoDB = async (
   if (!images || images.length === 0) {
     throw new AppError(StatusCodes.BAD_REQUEST, "Product images are required.");
   }
-
   productData.imageUrls = images.map((image) => image.path);
-
   const result = await ProductModel.create(productData);
   return result;
 };
@@ -41,14 +39,18 @@ const getSingleProductFromDB = async (id: string) => {
 
 // Update a product by ID
 const updateProductInDB = async (id: string, data: TProduct) => {
-  console.log("data.images", data.images);
-  if (data.images && data.images.length > 0) {
-    data.imageUrls = data.images.map((image: any) => image.path);
-  }
-  const result = await ProductModel.findByIdAndUpdate(id, data, { new: true });
 
+  // Only run the mapping logic if user updated image data
+  if (Array.isArray(data?.images?.images) && data.images.images.length > 0) {
+    const picData = data.images.images;
+    const pic = picData.map((image) => image?.path);
+    data.imageUrls = pic;
+  }
+
+  const result = await ProductModel.findByIdAndUpdate(id, data, { new: true });
   return result;
 };
+
 
 //respond to requests
 const respondToRentalRequestDB = async (
