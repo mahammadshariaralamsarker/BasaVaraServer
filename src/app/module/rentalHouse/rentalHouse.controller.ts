@@ -42,9 +42,9 @@ const getSingleProduct = catchAsync(async (req: Request, res: Response) => {
 
 const updateProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const productId = req.params.productId;
+    const productId = req.params.id;
     const images = req.files as IImageFiles;
-    const data = { ...req.body, images };
+    const data = { ...req.body, images }; 
 
     const result = await ProductServices.updateProductInDB(productId, data);
 

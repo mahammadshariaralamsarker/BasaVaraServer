@@ -39,15 +39,18 @@ const getSingleProductFromDB = async (id: string) => {
 
 // Update a product by ID
 const updateProductInDB = async (id: string, data: TProduct) => {
-
+   
+ 
   // Only run the mapping logic if user updated image data
   if (Array.isArray(data?.images?.images) && data.images.images.length > 0) {
     const picData = data.images.images;
     const pic = picData.map((image) => image?.path);
     data.imageUrls = pic;
   }
-
+  console.log(id);
+console.log(data);
   const result = await ProductModel.findByIdAndUpdate(id, data, { new: true });
+  console.log(result);
   return result;
 };
 

@@ -16,7 +16,7 @@ const register = catchAsync(async (req, res) => {
   });
 });
 
-const login = catchAsync(async (req, res) => { 
+const login = catchAsync(async (req, res) => {  
   const result = await AuthService.login(req.body);
   const { refreshToken } = result;  
 
