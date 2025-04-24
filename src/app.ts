@@ -23,6 +23,10 @@ app.use(
       "http://localhost:5174",
       "http://localhost:3000",
     ],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    exposedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
@@ -30,17 +34,12 @@ app.use(
 app.use(express.json());
 
 app.use("/auth", authRouter);
-
 app.use("/", ProductRoutes);
 app.use("/admin", adminRouter);
-
 app.use("/user", userRouter);
-
 //For tenant
 app.use("/tenants", TenantRouter);
-
 app.use("/order", OrderRoutes);
-
 app.get("/", (req: Request, res: Response) => {
   res.send({
     status: true,

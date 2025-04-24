@@ -11,31 +11,31 @@ const adminRouter = Router();
 
 adminRouter.get(
   "/listings",
-  // auth(USER_ROLE.admin),
+  auth(USER_ROLE.admin),
   adminController.getAllHousesByAdmin
 );
 
 adminRouter.get(
   "/users",
-  // auth(USER_ROLE.admin),
+  auth(USER_ROLE.admin),
   adminController.getAllUsersByAdmin
 );
 
 adminRouter.patch(
   "/user/:id",
-  // auth(USER_ROLE.admin),
+  auth(USER_ROLE.admin),
   adminController.userDeleteByAdmin
 );
  
 adminRouter.patch(
   "/listings/:id",
-  // auth(USER_ROLE.admin),
+  auth(USER_ROLE.admin),
 multerUpload.fields([{ name: "images" }]),
   parseBody,
   ProductControllers.updateProduct
 );
 adminRouter.delete("/listings/:productId",  
-  // auth(USER_ROLE.admin), 
+  auth(USER_ROLE.admin), 
   ProductControllers.deleteProduct);
 export default adminRouter;
  

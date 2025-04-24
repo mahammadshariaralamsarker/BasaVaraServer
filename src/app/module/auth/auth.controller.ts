@@ -34,6 +34,7 @@ const login = catchAsync(async (req, res) => {
     message: "Login successful",
     data: {
       token: result?.accessToken || "",
+      refreshToken: result?.refreshToken || "",
     },
   });
 });
@@ -54,8 +55,7 @@ const changePassword = catchAsync(async (req, res) => {
 });
 
 const refreshToken = catchAsync(async (req, res) => {
-  const { refreshToken } = req.cookies;
-  console.log("Cookies", refreshToken);
+  const { refreshToken } = req.cookies; 
   const result = await AuthService.regenerateAcessToken(refreshToken);
 
   sendResponse(res, {
@@ -66,9 +66,24 @@ const refreshToken = catchAsync(async (req, res) => {
   });
 });
 
+const getMeInfo = catchAsync(async (req, res) => {
+  if (!req.user) {
+    throw new AppError(401, "Unauthorized. User not found in request.");
+  }
+  const result = await AuthService.getMeInfo(req.user);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "User info retrieved successfully",
+    data: result,
+  });
+});
+
 export const AuthControllers = {
   register,
   login,
   changePassword,
   refreshToken,
+  getMeInfo,
 };

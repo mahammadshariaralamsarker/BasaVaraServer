@@ -26,9 +26,8 @@ authRouter.post(
   validateRequest(AuthValidation.changePasswordValidationSchema),
   AuthControllers.changePassword
 );
-
 authRouter.post("/refresh-token", AuthControllers.refreshToken);
-
+authRouter.get("/me", auth("admin", "tenant", "landlord"), AuthControllers.getMeInfo);
 authRouter.use(globalErrorHandler);
 
 export default authRouter;
