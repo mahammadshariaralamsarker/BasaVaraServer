@@ -25,51 +25,26 @@ const updateTenantProfileDB = async (id: string, payload: Partial<IUser>) => {
   return result;
 };
 
-//   status: "approved" | "rejected",
-//   phoneNumber?: string
-// ) => {
-//   const request = await Tenant.findById(requestId);
+const getAllRentalRequestsForLandlordFromDB = async (landlordId: string) => {
+  const products = await ProductModel.find({}).select("LandlordID");
+  console.log(products);
 
-//   if (!request) {
-//     throw new AppError(400, "Tenant Request Not found");
-//   }
+  const result = await Tenant.find()
+    .populate({
+      path: "products",
+      match: { LandlordID: landlordId },
+    })
+    .populate("tenant");
 
-//   const product = await ProductModel.findById(request.products);
-//   if (!product) {
-//     throw new AppError(400, "Product Not found");
-//   }
+  // Filter out requests where products didn't match (i.e., landlord didn't own it)
+  const filtered = result.filter((req) => req.products !== null);
 
-//   // console.log(request);
-//   // console.log("This is product", product);
-
-//   const landlord = await User.findById(product.LandlordID);
-//   if (!landlord) {
-//     throw new AppError(400, "User Not found");
-//   }
-
-//   console.log(landlord);
-
-//   // If status is "Approved", check if the landlord's phone number is provided
-//   if (status === "approved") {
-//     const landlordPhone = landlord.phone || phoneNumber;
-//     if (!landlord?.phone) {
-//       if (!landlordPhone) {
-//         throw new AppError(404, "Phone number is required");
-//       }
-//       request.phone = landlordPhone;
-//     } else {
-//       request.phone = landlordPhone;
-//     }
-
-//     request.status = status; // Update the status to Approved/Rejected
-//     await request.save(); // Save the changes
-
-//     return request;
-//   }
-// };
+  return filtered;
+};
 
 export const TenantService = {
   createTenantRequestIntoDB,
   getTenantRequestsFromDB,
   updateTenantProfileDB,
+  getAllRentalRequestsForLandlordFromDB,
 };

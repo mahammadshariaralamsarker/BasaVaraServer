@@ -45,8 +45,24 @@ const updateTenantProfile = catchAsync(async (req, res) => {
   });
 });
 
+const getRentalRequestsForLandlord = catchAsync(async (req, res) => {
+  const landlordId = req.user?.id; // from auth middleware
+  console.log('landlord', landlordId);
+  const result = await TenantService.getAllRentalRequestsForLandlordFromDB(
+    landlordId
+  );
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Retrieved rental requests for landlord",
+    data: result,
+  });
+});
+
 export const TenantController = {
   submitRequest,
   getMyRequests,
   updateTenantProfile,
+  getRentalRequestsForLandlord,
 };
