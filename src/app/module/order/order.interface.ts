@@ -6,7 +6,7 @@ export type TRentalTransaction = {
   product: Types.ObjectId; // from Product model
   landlord: Types.ObjectId; // from User model (Landlord)
   amount: number;
-  status: "Pending" | "Paid" | "Failed";
+  status: "Pending" | "Paid" | "Cancelled";
   transaction: {
     id: string;
     transaction_status?: string;

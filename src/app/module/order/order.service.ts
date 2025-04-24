@@ -39,9 +39,25 @@ const createRentalTransactionIntoDB = async (
     product: product?._id,
   });
 
+  // if (existingTransaction) {
+  //   if (existingTransaction.status === "Paid" ) {
+  //     throw new AppError(400, "This rental has already been paid for");
+  //   } else {
+  //     throw new AppError(
+  //       400,
+  //       "You already have a pending transaction for this request"
+  //     );
+  //   }
+  // }
+
   if (existingTransaction) {
-    if (existingTransaction.status === "Paid") {
+    if (existingTransaction?.status === "Paid") {
       throw new AppError(400, "This rental has already been paid for");
+    } else if (
+      existingTransaction?.status === "Cancelled" ||
+      existingTransaction?.status === "Pending"
+    ) {
+      await RentalTransaction.deleteOne({ _id: existingTransaction._id });
     } else {
       throw new AppError(
         400,

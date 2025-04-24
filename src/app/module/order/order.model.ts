@@ -18,7 +18,7 @@ const rentalTransactionSchema = new Schema<TRentalTransaction>(
     amount: { type: Number, required: true },
     status: {
       type: String,
-      enum: ["Pending", "Paid", "Failed"],
+      enum: ["Pending", "Paid", "Cancelled"],
       default: "Pending",
     },
     transaction: {
