@@ -8,6 +8,22 @@ import { Tenant } from "./tenant.model";
 
 //New rental request for a house
 const createTenantRequestIntoDB = async (data: ITenant) => {
+  const { tenant, products: productId } = data;
+
+  // Check if the tenant has already requested this product
+  const existingRequest = await Tenant.findOne({
+    tenant,
+    products: productId,
+  });
+
+  if (existingRequest) {
+    throw new AppError(
+      400,
+      "You have already submitted a request for this property."
+    );
+  }
+
+  // Create a new rental request
   const result = await Tenant.create(data);
   return result;
 };
@@ -27,7 +43,7 @@ const updateTenantProfileDB = async (id: string, payload: Partial<IUser>) => {
 
 const getAllRentalRequestsForLandlordFromDB = async (landlordId: string) => {
   const products = await ProductModel.find({}).select("LandlordID");
-  // console.log(products); 
+  // console.log(products);
 
   const result = await Tenant.find()
     .populate({

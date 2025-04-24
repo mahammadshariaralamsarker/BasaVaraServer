@@ -26,7 +26,8 @@ router.get(
 
 // Update a product by ID -----------
 router.put(
-  "/landlords/listings/:productId",
+  "/landlords/listings/:id",
+  auth("landlord"),
   multerUpload.fields([{ name: "images" }]),
   parseBody,
   ProductControllers.updateProduct

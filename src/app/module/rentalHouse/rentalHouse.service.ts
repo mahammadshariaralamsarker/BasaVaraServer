@@ -38,17 +38,54 @@ const getSingleProductFromDB = async (id: string) => {
 };
 
 // Update a product by ID
-const updateProductInDB = async (id: string, data: TProduct) => {
+// const updateProductInDB = async (id: string, data: TProduct) => {
 
-  // Only run the mapping logic if user updated image data
-  if (Array.isArray(data?.images?.images) && data.images?.images?.length > 0) {
-    const picData = data.images.images;
-    const pic = picData.map((image) => image?.path);
-    data.imageUrls = pic;
+//   // Only run the mapping logic if user updated image data
+//   if (Array.isArray(data?.images?.images) && data.images?.images?.length > 0) {
+//     const picData = data.images.images;
+//     const pic = picData.map((image) => image?.path);
+//     data.imageUrls = pic;
+//   }
+
+//   const result = await ProductModel.findByIdAndUpdate(id, data, { new: true });
+//   return result;
+// };
+
+const updateProductInDB = async (
+  productId: string,
+  updatedData: Partial<TProduct>,
+  files: IImageFiles
+) => {
+  // Handle new file uploads (if any)
+  if (files) {
+    if (files.images && Array.isArray(files.images)) {
+      updatedData.images = files.images.map(
+        (file) => (file as Express.Multer.File).path
+      );
+    }
+
+    if (files.thumbnail && Array.isArray(files.thumbnail)) {
+      // If you have thumbnail logic — otherwise ignore this
+      const thumbnailPath = (files.thumbnail[0] as Express.Multer.File).path;
+      // optionally: updatedData.thumbnail = thumbnailPath;
+      // But your TProduct does not include thumbnail
+    }
   }
 
-  const result = await ProductModel.findByIdAndUpdate(id, data, { new: true });
-  return result;
+  const updatedProduct = await ProductModel.findByIdAndUpdate(
+    productId,
+    updatedData,
+    {
+      new: true, // return the updated doc
+      runValidators: true,
+    }
+  );
+
+  if (!updatedProduct) {
+    throw new AppError(StatusCodes.NOT_FOUND, 'Product not found');
+  }
+
+  return updatedProduct;
 };
 
 //respond to requests

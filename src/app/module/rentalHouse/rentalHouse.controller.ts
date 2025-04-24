@@ -8,7 +8,7 @@ import { IImageFiles } from "../../middlewares/interface/IImageFile";
 
 const createProduct = catchAsync(async (req: Request, res: Response) => {
   const landlordId = req?.user?.id;
-  // console.log(landlordId); 
+  // console.log(landlordId);
 
   const productData = { ...req.body, LandlordID: landlordId };
 
@@ -45,34 +45,54 @@ const getSingleProduct = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const updateProduct = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const productId = req.params.productId;
-    const images = req.files as IImageFiles;
-    const data = { ...req.body, images };
+const updateProduct = catchAsync(async (req: Request, res: Response) => {
+  const landlordId = req?.user?.id;
+  const productId = req.params.id;
 
-    const result = await ProductServices.updateProductInDB(productId, data);
+  const updatedData = { ...req.body, LandlordID: landlordId };
 
-    if (!result) {
-      res.status(404).json({
-        success: false,
-        message: "Product not found",
-      });
-    }
+  const result = await ProductServices.updateProductInDB(
+    productId,
+    updatedData,
+    req.files as IImageFiles
+  );
 
-    res.status(200).json({
-      success: true,
-      message: "Product updated successfully",
-      data: result,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      success: false,
-      message: "Failed to update Product",
-    });
-  }
-};
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Listing updated successfully",
+    data: result,
+  });
+});
+
+// const updateProduct = async (req: Request, res: Response): Promise<void> => {
+//   try {
+//     const productId = req.params.productId;
+//     const images = req.files as IImageFiles;
+//     const data = { ...req.body, images };
+
+//     const result = await ProductServices.updateProductInDB(productId, data);
+
+//     if (!result) {
+//       res.status(404).json({
+//         success: false,
+//         message: "Product not found",
+//       });
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       message: "Product updated successfully",
+//       data: result,
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({
+//       success: false,
+//       message: "Failed to update Product",
+//     });
+//   }
+// };
 
 const deleteProduct = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -103,7 +123,7 @@ const deleteProduct = async (req: Request, res: Response): Promise<void> => {
 
 const respondToRentalRequest = catchAsync(async (req, res) => {
   const { requestId } = req.params;
-  // console.log(requestId); 
+  // console.log(requestId);
   const { status, phoneNumber } = req.body;
   const userId = req?.user?.id;
 
