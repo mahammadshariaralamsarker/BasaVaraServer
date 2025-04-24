@@ -9,6 +9,7 @@ const router = express.Router();
 // Create a new product ----------done
 router.post(
   "/landlords/listings",
+  auth("landlord"),
   multerUpload.fields([{ name: "images" }]),
   parseBody,
   ProductControllers.createProduct

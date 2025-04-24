@@ -7,8 +7,13 @@ import { StatusCodes } from "http-status-codes";
 import { IImageFiles } from "../../middlewares/interface/IImageFile";
 
 const createProduct = catchAsync(async (req: Request, res: Response) => {
+  const landlordId = req?.user?.id;
+  console.log(landlordId);
+
+  const productData = { ...req.body, LandlordID: landlordId };
+
   const result = await ProductServices.createProductIntoDB(
-    req.body,
+    productData,
     req.files as IImageFiles
   );
   sendResponse(res, {
