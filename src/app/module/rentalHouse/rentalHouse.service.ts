@@ -41,7 +41,7 @@ const getSingleProductFromDB = async (id: string) => {
 const updateProductInDB = async (id: string, data: TProduct) => {
 
   // Only run the mapping logic if user updated image data
-  if (Array.isArray(data?.images?.images) && data.images.images.length > 0) {
+  if (Array.isArray(data?.images?.images) && data.images?.images?.length > 0) {
     const picData = data.images.images;
     const pic = picData.map((image) => image?.path);
     data.imageUrls = pic;
@@ -50,7 +50,6 @@ const updateProductInDB = async (id: string, data: TProduct) => {
   const result = await ProductModel.findByIdAndUpdate(id, data, { new: true });
   return result;
 };
-
 
 //respond to requests
 const respondToRentalRequestDB = async (
@@ -75,10 +74,10 @@ const respondToRentalRequestDB = async (
     throw new AppError(400, "User Not found");
   }
 
-  console.log(product.LandlordID.toString(), userId);
+  // console.log(product.LandlordID.toString(), userId);
 
   if (product.LandlordID.toString() !== userId) {
-    console.log("Inside here");
+    // console.log("Inside here");
     throw new AppError(
       400,
       "You are not authorized to respond to this request"

@@ -22,7 +22,7 @@ import { RentalServices } from "./order.service";
 // });
 
 const makeRentalPayment = catchAsync(async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body); 
   if (!req.user) {
     throw new AppError(401, "Unauthorized: User not found in request");
   }
@@ -43,7 +43,7 @@ const makeRentalPayment = catchAsync(async (req, res) => {
 
 // Order Verify Controllers
 const rentalVerify = catchAsync(async (req, res) => {
-  console.log(req?.query?.id);
+  // console.log(req?.query?.id); 
   const result = await RentalServices.verifyPayment(
     req.query.orderId as string
   );

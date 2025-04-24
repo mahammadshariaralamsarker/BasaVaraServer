@@ -27,7 +27,7 @@ const updateTenantProfileDB = async (id: string, payload: Partial<IUser>) => {
 
 const getAllRentalRequestsForLandlordFromDB = async (landlordId: string) => {
   const products = await ProductModel.find({}).select("LandlordID");
-  console.log(products);
+  // console.log(products); 
 
   const result = await Tenant.find()
     .populate({

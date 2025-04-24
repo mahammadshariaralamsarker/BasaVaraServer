@@ -19,9 +19,9 @@ const createRentalTransactionIntoDB = async (
   userInfo: JwtPayload,
   client_ip: string
 ) => {
-  console.log(client_ip);
+  // console.log(client_ip); 
   const tenantRequest = await Tenant.findById(tenantId).populate("products");
-  console.log(tenantRequest);
+  // console.log(tenantRequest);  
   if (!tenantRequest) throw new AppError(404, "Rental request not found");
 
   // console.log(tenantRequest);
@@ -131,7 +131,7 @@ const createRentalTransactionIntoDB = async (
 
 const verifyPayment = async (orderId: string) => {
   const verifiedPayment = await OrderUtils.verifyPaymentAsync(orderId);
-  console.log(verifiedPayment[0].sp_code);
+  // console.log(verifiedPayment[0].sp_code); 
   if (verifiedPayment[0].sp_code === "1011") {
     throw new AppError(404, "Order not found!");
   }
@@ -178,7 +178,7 @@ const verifyPayment = async (orderId: string) => {
 
 const getTenantOrdersFromDB = async (email: string) => {
   const tenant = await User.findOne({ email });
-  console.log("tenant", tenant);
+  // console.log("tenant", tenant); 
   const result = await RentalTransaction.find({ tenant: tenant?._id })
     .populate("tenant")
     .populate("product");
@@ -199,7 +199,7 @@ const cancelRentalOrderFromDB = async (orderId: string, userId: string) => {
   if (!order) {
     throw new AppError(404, "Order not found or deleted");
   }
-  console.log(order.tenant, userId);
+  // console.log(order.tenant, userId); 
 
   // Ensure only the correct tenant can cancel
   if (String(order.tenant) !== String(userId)) {

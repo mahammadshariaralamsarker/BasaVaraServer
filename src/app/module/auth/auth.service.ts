@@ -67,7 +67,7 @@ const changePassword = async (
     throw new AppError(404, "User Not Found");
   }
 
-  console.log(payload.oldPassword, user?.password);
+  // console.log(payload.oldPassword, user?.password); 
 
   if (!(await isPasswordMatched(payload.oldPassword, user?.password))) {
     throw new AppError(409, "Password not matched");

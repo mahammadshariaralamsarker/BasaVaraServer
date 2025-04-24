@@ -31,7 +31,7 @@ const getAllUsersByAdmin = catchAsync(async (req, res) => {
 });
 const userDeleteByAdmin = catchAsync(async (req, res) => {
   const userId = req.params.id;
-  console.log("userId", userId);
+  // console.log("userId", userId); 
   const result = await adminService.deleteUserByAdmin(userId);
 
   if (!result) {

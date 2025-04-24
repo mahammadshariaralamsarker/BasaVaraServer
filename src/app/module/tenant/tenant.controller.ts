@@ -5,7 +5,7 @@ import { TenantService } from "./tenant.service";
 
 const submitRequest = catchAsync(async (req, res) => {
   const tenantId = req.user?.id; // from auth middleware
-  console.log(tenantId);
+  // console.log(tenantId); 
   const payload = { ...req.body, tenant: tenantId };
   const result = await TenantService.createTenantRequestIntoDB(payload);
 
@@ -33,7 +33,7 @@ const getMyRequests = catchAsync(async (req, res) => {
 const updateTenantProfile = catchAsync(async (req, res) => {
   const tenantId = req.user?.id;
   const { role, ...rest } = req.body; // Prevent role from being updated
-  console.log(tenantId, rest);
+  // console.log(tenantId, rest); 
 
   const result = await TenantService.updateTenantProfileDB(tenantId, rest);
 
@@ -47,7 +47,7 @@ const updateTenantProfile = catchAsync(async (req, res) => {
 
 const getRentalRequestsForLandlord = catchAsync(async (req, res) => {
   const landlordId = req.user?.id; // from auth middleware
-  console.log('landlord', landlordId);
+  // console.log('landlord', landlordId); 
   const result = await TenantService.getAllRentalRequestsForLandlordFromDB(
     landlordId
   );

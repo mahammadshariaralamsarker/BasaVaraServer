@@ -28,7 +28,7 @@ const getUser = catchAsync(async (req, res) => {
 });
 
 const getSingleUser = catchAsync(async (req, res) => {
-  console.log(req.params);
+  // console.log(req.params); 
   const userId = req.params.userId;
 
   const result = await userService.getSingleUser(userId);

@@ -8,7 +8,7 @@ import { IImageFiles } from "../../middlewares/interface/IImageFile";
 
 const createProduct = catchAsync(async (req: Request, res: Response) => {
   const landlordId = req?.user?.id;
-  console.log(landlordId);
+  // console.log(landlordId); 
 
   const productData = { ...req.body, LandlordID: landlordId };
 
@@ -103,7 +103,7 @@ const deleteProduct = async (req: Request, res: Response): Promise<void> => {
 
 const respondToRentalRequest = catchAsync(async (req, res) => {
   const { requestId } = req.params;
-  console.log(requestId);
+  // console.log(requestId); 
   const { status, phoneNumber } = req.body;
   const userId = req?.user?.id;
 
