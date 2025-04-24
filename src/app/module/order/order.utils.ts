@@ -15,7 +15,7 @@ shurjopay.config(
   "sp_sandbox",
   "pyyk97hu&6u6",
   "INV",
-  "https://ce6f-103-148-177-3.ngrok-free.app/"
+  "http://localhost:3000/tenant/payments"
 );
 
 const makePaymentAsync = async (

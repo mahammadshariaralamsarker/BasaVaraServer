@@ -35,7 +35,7 @@ const productSchema = new Schema<TProduct>(
     LandlordID: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: [true, "LandlordID is required"],
+      // required: [true, "LandlordID is required"], 
     },
     area: {
       type: String,

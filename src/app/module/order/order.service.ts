@@ -39,9 +39,25 @@ const createRentalTransactionIntoDB = async (
     product: product?._id,
   });
 
+  // if (existingTransaction) {
+  //   if (existingTransaction.status === "Paid" ) {
+  //     throw new AppError(400, "This rental has already been paid for");
+  //   } else {
+  //     throw new AppError(
+  //       400,
+  //       "You already have a pending transaction for this request"
+  //     );
+  //   }
+  // }
+
   if (existingTransaction) {
-    if (existingTransaction.status === "Paid") {
+    if (existingTransaction?.status === "Paid") {
       throw new AppError(400, "This rental has already been paid for");
+    } else if (
+      existingTransaction?.status === "Cancelled" ||
+      existingTransaction?.status === "Pending"
+    ) {
+      await RentalTransaction.deleteOne({ _id: existingTransaction._id });
     } else {
       throw new AppError(
         400,
@@ -91,11 +107,21 @@ const createRentalTransactionIntoDB = async (
   const payment = await OrderUtils.makePaymentAsync(paymentPayload);
   // console.log(payment);
 
+  // if ((payment as any)?.transactionStatus) {
+  //   order = await order.updateOne({
+  //     transaction: {
+  //       id: (payment as any)?.sp_order_id,
+  //       transaction_status: (payment as any)?.transactionStatus,
+  //       checkout_url: (payment as any)?.checkout_url,
+  //     },
+  //   });
+  // }
   if ((payment as any)?.transactionStatus) {
     order = await order.updateOne({
       transaction: {
         id: (payment as any)?.sp_order_id,
         transaction_status: (payment as any)?.transactionStatus,
+        checkout_url: (payment as any)?.checkout_url,
       },
     });
   }
@@ -129,10 +155,15 @@ const verifyPayment = async (orderId: string) => {
             : verifiedPayment[0].bank_status == "Cancel"
             ? "Cancelled"
             : "",
-      }
+      },
+      { new: true }
     );
 
-    if (updatedTransaction?.status === "Paid") {
+    if (!updatedTransaction) {
+      throw new AppError(404, "Transaction not found");
+    }
+
+    if (updatedTransaction?.transaction?.bank_status === "Success") {
       await ProductModel.findByIdAndUpdate(updatedTransaction.product, {
         houseStatus: "rented",
       });

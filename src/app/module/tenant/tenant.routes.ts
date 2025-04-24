@@ -14,5 +14,10 @@ router.post(
 );
 router.get("/my-requests", auth("tenant"), TenantController.getMyRequests);
 router.put("/profile", auth("tenant"), TenantController.updateTenantProfile);
+router.get(
+  "/rental-requests",
+  auth("landlord"),
+  TenantController.getRentalRequestsForLandlord
+);
 
 export const TenantRouter = router;

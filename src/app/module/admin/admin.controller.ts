@@ -50,5 +50,5 @@ const userDeleteByAdmin = catchAsync(async (req, res) => {
 export const adminController = {
   getAllHousesByAdmin,
   getAllUsersByAdmin,
-  userDeleteByAdmin, 
+  userDeleteByAdmin,
 };
