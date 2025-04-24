@@ -3,7 +3,11 @@ import { ITenant } from "./tenant.interface";
 
 const tenantSchema = new Schema<ITenant>(
   {
-    products: { type: Schema.Types.ObjectId, ref: "Product", required: true },
+    products: {
+      type: Schema.Types.ObjectId,
+      ref: "Product",
+      required: true,
+    },
     tenant: { type: Schema.Types.ObjectId, ref: "User" },
     status: {
       type: String,

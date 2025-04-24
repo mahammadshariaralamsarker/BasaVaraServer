@@ -23,6 +23,7 @@ app.use(
       "http://localhost:5174",
       "http://localhost:3000",
     ],
+    credentials: true,
   })
 );
 
@@ -52,6 +53,5 @@ app.use(globalErrorHandler);
 app.use(notFound);
 
 export default app;
-
 
 //push
