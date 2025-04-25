@@ -1,7 +1,5 @@
-Requirements : https://docs.google.com/document/d/1L6m2MxZx7m7ilTDyeCrLnv5QTuxPtA_5nGXSh-QqYZ0/edit?tab=t.67axls8qnxay
-
 <h1 align="center">
-  Assignment  project - 6 
+  Assignment  project - 6 (BasaVara Server)
 </h1>
 
 # 📝 Basa Vara Management API
