@@ -26,16 +26,17 @@ adminRouter.patch(
   auth(USER_ROLE.admin),
   adminController.userDeleteByAdmin
 );
- 
+
 adminRouter.patch(
   "/listings/:id",
   auth(USER_ROLE.admin),
-multerUpload.fields([{ name: "images" }]),
+  multerUpload.fields([{ name: "images" }]),
   parseBody,
   ProductControllers.updateProduct
 );
-adminRouter.delete("/listings/:productId",  
-  auth(USER_ROLE.admin), 
-  ProductControllers.deleteProduct);
+adminRouter.delete(
+  "/listings/:productId",
+  auth(USER_ROLE.admin),
+  ProductControllers.deleteProduct
+);
 export default adminRouter;
- 

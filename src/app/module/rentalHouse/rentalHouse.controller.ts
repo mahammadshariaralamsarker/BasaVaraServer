@@ -72,7 +72,6 @@ const updateProduct = async (req: Request, res: Response): Promise<void> => {
 const deleteProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     const { productId } = req.params;
-
     const result = await ProductServices.deleteProductFromDB(productId);
 
     if (!result) {

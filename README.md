@@ -24,7 +24,9 @@ Key features include advanced search and filtering for efficient content discove
 - **http-status-codes**
 - **JWT**
 - **bcrypt**
-- **Stripe**
+- **ShurjoPay**
+- **Cookie-parser**
+- **multer** 
 
 ---
 
@@ -36,6 +38,12 @@ Key features include advanced search and filtering for efficient content discove
   - Block users.
   - Delete any blog.
   - **Cannot update blogs.**
+- **Landlord**:
+
+  - Register and log in.
+  - Create, update, and delete their own blogs.
+  - **Cannot perform admin actions.**
+
 - **User**:
   - Register and log in.
   - Create, update, and delete their own blogs.
@@ -55,30 +63,29 @@ Key features include advanced search and filtering for efficient content discove
 ## 🛠️ API Endpoints
 
 ### Authentication
-
 - **Register**: `POST /auth/register`
 - **Login**: `POST /auth/login`
 
-### Blog Management
+### Landlord Management
+- **Create Landlord**: `POST  /landlords/listings` (Logged-in users only)
+- **Update Landlord**: `PUT /landlords/listings/:productId` (Landlord owner only)
+- **Delete Landlord**: `DELETE  /:productId` (Landlord owner only)
+- **View Landlord**: `GET /landlords/listings`
+- **View single Landlord**: `GET /landlords/listings/:productId`
+- **Landlord Get Request from Tenant**: `PUT /landlords/listings/:productId`
+-
 
-- **Create Blog**: `POST  /blogs` (Logged-in users only)
-- **Update Blog**: `PATCH  /blogs/:id` (Blog owner only)
-- **Delete Blog**: `DELETE  /blogs/:id` (Blog owner only)
-- **View Blogs**: `GET /blogs` (Public API with search, sort, filter)
+### Tenant Management
+- **Make Request To Landlord**: `POST /tenant/requests`
+- **Make Payment With ShurjoPay if Landlord accepted his request**
 
-### Category Management
-
-- **Create Blog**: `POST /api/categorys`
-- **Update Blog**: `PATCH /api/categorys/:id`
-- **Delete Blog**: `DELETE /api/categorys/:id`
-- **View Blogs**: `GET /api/categorys`
 
 ### Admin Actions
+- **Get All Landlord**: `GET /admin/listings`
+- **Get All User**: `GET /admin/user`
+- **Delete Any User**: `PATCH /admin/user/:id/`
+- **Delete Any Landlord**: `DELETE /admin/listings/:productId`
 
-- **Block User**: `PATCH /api/admin/users/:userId/block`
-- **Delete Any Blog**: `DELETE /api/admin/blogs/:id`
-
----
 
 ## 🛡️ Error Handling
 
@@ -93,6 +100,4 @@ All errors are returned in a structured format with clear messages and status co
 }
 ```
 
-Thank you for exploring this project! 🚀
-
-# assignment-4-server
+Thank you for exploring this project! 🚀 
