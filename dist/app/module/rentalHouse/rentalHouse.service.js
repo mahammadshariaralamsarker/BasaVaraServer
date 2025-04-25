@@ -53,25 +53,27 @@ const getSingleProductFromDB = (id) => __awaiter(void 0, void 0, void 0, functio
 //   const result = await ProductModel.findByIdAndUpdate(id, data, { new: true });
 //   return result;
 // };
-const updateProductInDB = (productId, updatedData, files) => __awaiter(void 0, void 0, void 0, function* () {
+const updateProductInDB = (productId, updatedData) => __awaiter(void 0, void 0, void 0, function* () {
     // Handle new file uploads (if any)
-    if (files) {
-        if (files.images && Array.isArray(files.images)) {
-            updatedData.images = files.images.map((file) => file.path);
-        }
-        if (files.thumbnail && Array.isArray(files.thumbnail)) {
-            // If you have thumbnail logic — otherwise ignore this
-            const thumbnailPath = files.thumbnail[0].path;
-            // optionally: updatedData.thumbnail = thumbnailPath;
-            // But your TProduct does not include thumbnail
-        }
-    }
+    // if (files) {
+    //   if (files.images && Array.isArray(files.images)) {
+    //     updatedData.images = files.images.map(
+    //       (file) => (file as Express.Multer.File).path
+    //     );
+    //   }
+    //   if (files.thumbnail && Array.isArray(files.thumbnail)) {
+    //     // If you have thumbnail logic — otherwise ignore this
+    //     const thumbnailPath = (files.thumbnail[0] as Express.Multer.File).path;
+    //     // optionally: updatedData.thumbnail = thumbnailPath;
+    //     // But your TProduct does not include thumbnail
+    //   }
+    // }
     const updatedProduct = yield rentalHouse_model_1.ProductModel.findByIdAndUpdate(productId, updatedData, {
         new: true, // return the updated doc
         runValidators: true,
     });
     if (!updatedProduct) {
-        throw new error_1.default(http_status_codes_1.StatusCodes.NOT_FOUND, 'Product not found');
+        throw new error_1.default(http_status_codes_1.StatusCodes.NOT_FOUND, "Product not found");
     }
     return updatedProduct;
 });

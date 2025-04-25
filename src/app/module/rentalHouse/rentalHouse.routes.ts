@@ -25,7 +25,7 @@ router.get(
 );
 
 // Update a product by ID -----------
-router.put(
+router.patch(
   "/landlords/listings/:id",
   auth("landlord"),
   multerUpload.fields([{ name: "images" }]),

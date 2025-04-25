@@ -54,7 +54,7 @@ const updateProduct = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
     const landlordId = (_a = req === null || req === void 0 ? void 0 : req.user) === null || _a === void 0 ? void 0 : _a.id;
     const productId = req.params.id;
     const updatedData = Object.assign(Object.assign({}, req.body), { LandlordID: landlordId });
-    const result = yield rentalHouse_service_1.ProductServices.updateProductInDB(productId, updatedData, req.files);
+    const result = yield rentalHouse_service_1.ProductServices.updateProductInDB(productId, updatedData);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,

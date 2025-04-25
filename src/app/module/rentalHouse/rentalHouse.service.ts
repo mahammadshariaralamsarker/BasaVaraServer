@@ -54,23 +54,22 @@ const getSingleProductFromDB = async (id: string) => {
 const updateProductInDB = async (
   productId: string,
   updatedData: Partial<TProduct>,
-  files: IImageFiles
 ) => {
   // Handle new file uploads (if any)
-  if (files) {
-    if (files.images && Array.isArray(files.images)) {
-      updatedData.images = files.images.map(
-        (file) => (file as Express.Multer.File).path
-      );
-    }
+  // if (files) {
+  //   if (files.images && Array.isArray(files.images)) {
+  //     updatedData.images = files.images.map(
+  //       (file) => (file as Express.Multer.File).path
+  //     );
+  //   }
 
-    if (files.thumbnail && Array.isArray(files.thumbnail)) {
-      // If you have thumbnail logic — otherwise ignore this
-      const thumbnailPath = (files.thumbnail[0] as Express.Multer.File).path;
-      // optionally: updatedData.thumbnail = thumbnailPath;
-      // But your TProduct does not include thumbnail
-    }
-  }
+  //   if (files.thumbnail && Array.isArray(files.thumbnail)) {
+  //     // If you have thumbnail logic — otherwise ignore this
+  //     const thumbnailPath = (files.thumbnail[0] as Express.Multer.File).path;
+  //     // optionally: updatedData.thumbnail = thumbnailPath;
+  //     // But your TProduct does not include thumbnail
+  //   }
+  // }
 
   const updatedProduct = await ProductModel.findByIdAndUpdate(
     productId,
@@ -82,7 +81,7 @@ const updateProductInDB = async (
   );
 
   if (!updatedProduct) {
-    throw new AppError(StatusCodes.NOT_FOUND, 'Product not found');
+    throw new AppError(StatusCodes.NOT_FOUND, "Product not found");
   }
 
   return updatedProduct;

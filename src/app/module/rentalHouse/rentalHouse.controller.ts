@@ -53,8 +53,7 @@ const updateProduct = catchAsync(async (req: Request, res: Response) => {
 
   const result = await ProductServices.updateProductInDB(
     productId,
-    updatedData,
-    req.files as IImageFiles
+    updatedData
   );
 
   sendResponse(res, {

@@ -15,7 +15,7 @@ shurjopay.config(
   "sp_sandbox",
   "pyyk97hu&6u6",
   "INV",
-  "http://localhost:3000/tenant/payments"
+  "https://basa-vara-client.vercel.app/tenant/payments"
 );
 
 const makePaymentAsync = async (

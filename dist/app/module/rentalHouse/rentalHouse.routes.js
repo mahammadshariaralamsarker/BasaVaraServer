@@ -17,7 +17,7 @@ router.get("/landlords/listings", rentalHouse_controller_1.ProductControllers.ge
 // Get a single product by ID----done
 router.get("/landlords/listings/:productId", rentalHouse_controller_1.ProductControllers.getSingleProduct);
 // Update a product by ID -----------
-router.put("/landlords/listings/:id", (0, auth_1.default)("landlord"), multer_config_1.multerUpload.fields([{ name: "images" }]), bodyParser_1.parseBody, rentalHouse_controller_1.ProductControllers.updateProduct);
+router.patch("/landlords/listings/:id", (0, auth_1.default)("landlord"), multer_config_1.multerUpload.fields([{ name: "images" }]), bodyParser_1.parseBody, rentalHouse_controller_1.ProductControllers.updateProduct);
 //Landlord postings
 router.get("/landlords/my-postings", (0, auth_1.default)("landlord"), rentalHouse_controller_1.ProductControllers.getLandlordPostings);
 //Respond to tenants

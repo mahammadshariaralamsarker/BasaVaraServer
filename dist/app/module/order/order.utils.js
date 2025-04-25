@@ -22,7 +22,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderUtils = exports.shurjopay = void 0;
 const shurjopay_1 = __importDefault(require("shurjopay"));
 exports.shurjopay = new shurjopay_1.default();
-exports.shurjopay.config("https://sandbox.shurjopayment.com", "sp_sandbox", "pyyk97hu&6u6", "INV", "http://localhost:3000/tenant/payments");
+exports.shurjopay.config("https://sandbox.shurjopayment.com", "sp_sandbox", "pyyk97hu&6u6", "INV", "https://basa-vara-client.vercel.app/tenant/payments");
 const makePaymentAsync = (orderPayload) => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
         exports.shurjopay.makePayment(orderPayload, (res) => resolve(res), (err) => reject(err));
